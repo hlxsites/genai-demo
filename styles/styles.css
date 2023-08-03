@@ -289,7 +289,7 @@ main .section.highlight {
   background: var(--highlight-background-color);
   border-radius: 2rem;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: start;
   overflow: hidden auto;
   scroll-snap-align: center;
 }
@@ -335,8 +335,16 @@ main .section.highlight {
     scrollbar-gutter: stable;
   }
 
+  .cards-page .section {
+    justify-content: center;
+  }
+
   .cards-page .section button,
   .cards-page .section .button {
     font-size: inherit;
+  }
+
+  .cards-page .section > div {
+    margin: 0 auto;
   }
 }
