@@ -11,10 +11,38 @@ import {
   waitForLCP,
   loadBlocks,
   loadCSS,
+  toCamelCase,
+  toClassName,
 } from './lib-franklin.js';
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
+export async function getConfig(path) {
+  if (window.hlx.config) {
+    return window.hlx.config;
+  }
+  const resp = await fetch(`${path}/config.json`);
+  const json = await resp.json();
+  // General config
+  window.hlx.config = json.general.data.reduce((cfg, entry) => {
+    cfg[toCamelCase(entry.Key)] = entry.Value;
+    return cfg;
+  }, {});
+  // Personas
+  window.hlx.config.personas = json.personas.data.reduce((cfg, entry) => {
+    cfg[toCamelCase(entry.Id)] = {
+      id: entry.Id,
+      label: entry.Label,
+      color: entry.Color,
+    }
+    return cfg;
+  }, {});
+  // Styles
+  json.colors.data.forEach((entry) => {
+    document.documentElement.style.setProperty(`--${toClassName(entry.Key)}`, entry.Value);
+  });
+  return window.hlx.config;
+}
 /**
  * Builds hero block and prepends to main in a new section.
  * @param {Element} main The container element
@@ -22,11 +50,16 @@ const LCP_BLOCKS = []; // add your LCP blocks to the list
 function buildHeroBlock(main) {
   const h1 = main.querySelector('h1');
   const picture = main.querySelector('picture');
+  const parent = h1.parentElement;
   // eslint-disable-next-line no-bitwise
   if (h1 && picture && (h1.compareDocumentPosition(picture) & Node.DOCUMENT_POSITION_PRECEDING)) {
+    picture.parentElement.remove();
     const section = document.createElement('div');
-    section.append(buildBlock('hero', { elems: [picture, h1] }));
+    section.append(buildBlock('hero', { elems: [picture, ...parent.children] }));
     main.prepend(section);
+    if (!parent.childElementCount) {
+      parent.remove();
+    }
   }
 }
 
@@ -64,6 +97,10 @@ export function decorateMain(main) {
 async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
+  if (window.location.pathname.startsWith('/demos') || window.location.pathname.startsWith('/drafts/_template')) {
+    const [,root,demo] = window.location.pathname.split('/');
+    await getConfig(`/${root}/${demo}`);
+  }
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);

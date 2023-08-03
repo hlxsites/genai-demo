@@ -1,6 +1,4 @@
 footer {
-  padding: 2rem;
-  background-color: var(--overlay-background-color);
   font-size: var(--body-font-size-s);
 }
 
@@ -11,4 +9,148 @@ footer .footer {
 
 footer .footer p {
   margin: 0;
+}
+
+footer .chat-search {
+  display: flex;
+  position: fixed;
+  z-index: 99;
+  inset: 25% .5rem 0;
+  padding-top: 3rem;
+  background: rgb(255 255 255);
+  border: 1px solid lightgray;
+  border-radius: 1rem 1rem 0 0;
+  box-shadow: 0 0 1rem rgb(0 0 0 / 20%);
+  transition: all .3s, padding-top .3s ease;
+}
+
+footer .chat-search:target {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+footer .chat-search-input {
+  width: 100%;
+}
+
+footer .chat-search-results {
+  margin-top: 1rem;
+}
+
+footer .chat-search-container {
+  width: 100%;
+  padding: 0 3rem;
+}
+
+footer .chat-search-input input {
+  font-size: 1.7rem;
+  width: 100%;
+  border: none;
+}
+
+footer .chat-search-input input[type="search"] {
+  border: none;
+}
+
+footer .chat-search-input label {
+  font-size: 3rem;
+}
+
+footer .chat-search .close {
+  position: absolute;
+  right: 32px;
+  top: 32px;
+  width: 32px;
+  height: 32px;
+  opacity: 0.3;
+}
+
+footer .chat-search .close:hover {
+  opacity: 1;
+}
+
+footer .chat-search .close::before,
+footer .chat-search .close::after {
+  position: absolute;
+  content: '';
+  height: 1rem;
+  width: 2px;
+  left: 1rem;
+  background-color: #333;
+}
+
+footer .chat-search .close::before {
+  transform: translate(-.35rem) rotate(-45deg);
+}
+
+footer .chat-search .close::after {
+  transform: translate(.35rem) rotate(45deg);
+}
+
+footer .chat-search-open .chat-search-container {
+  overflow-y: scroll;
+}
+
+footer .chat-search-closed {
+  inset: calc(100vh - var(--footer-height)) .5rem 0;
+  padding-top: 0;
+}
+
+/* stylelint-disable-next-line selector-id-pattern */
+footer .chat-search-closed #searchChatResults {
+  display: none;
+}
+
+footer .chat-search-closed .close::before {
+  transform: translate(-.35rem) rotate(45deg);
+}
+
+footer .chat-search-closed .close::after {
+  transform: translate(.35rem) rotate(-45deg);
+}
+
+footer .chat-search-closed .chat-search-input input {
+  font-size: 1.5rem;
+}
+
+/* profile-view */
+.profile-view  {
+  overflow-y: scroll;
+  background-color: white;
+  color: black;
+}
+
+.profile-view .default-content-wrapper{
+  background: none;
+  text-shadow: none;
+  color: black;
+}
+
+.profile-view .default-content-wrapper p{
+  padding-top: 2rem;
+}
+
+.profile-view .cards-page.home .section:first-child {
+  text-shadow: none;
+  color: black;
+  padding: unset;
+}
+
+.profile-view-closed {
+  display: none;
+  position: absolute;
+  top: 3rem;
+  bottom: 0px;
+  width: 100%;
+  opacity: 0;
+  z-index: -1;
+}
+
+.profile-view-open {
+  position: absolute;
+  top: 3rem;
+  bottom: 0px;
+  width: 100%;
+  opacity: 1;
+  z-index: 999999;
 }

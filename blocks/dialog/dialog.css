@@ -1,0 +1,32 @@
+.dialog dialog {
+  position: relative;
+  box-sizing: border-box;
+  margin: 1rem;
+  padding: 0 1rem 1rem;
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100vh - 2rem);
+  border-radius: 1rem;
+}
+
+.dialog dialog > button:first-child {
+  position: sticky;
+  top: 1rem;
+  left: 100%;
+  margin-bottom: 1rem;
+  padding: .625rem 1rem;
+}
+
+@media (min-width: 600px) {
+  .dialog dialog {
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    min-width: 66vw;
+  } 
+}
+
+@media (min-width: 900px) {
+  .dialog dialog {
+    min-width: 50vw;
+  } 
+}
