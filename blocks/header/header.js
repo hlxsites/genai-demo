@@ -39,9 +39,9 @@ export default async function decorate(block) {
   const select = profile.querySelector('select');
   select.addEventListener('change', (ev) => {
     icon.style.setProperty('--color', window.hlx.config.personas[ev.target.value].color);
-    window.sessionStorage.setItem('genai-persona', ev.target.value);
+    window.sessionStorage.setItem('gaze-persona', ev.target.value);
   });
-  const persona = window.sessionStorage.getItem('genai-persona') || Object.keys(window.hlx.config.personas)[0];
+  const persona = window.sessionStorage.getItem('gaze-persona') || Object.keys(window.hlx.config.personas)[0];
   icon.style.setProperty('--color', window.hlx.config.personas[persona].color);
   Object.entries(window.hlx.config.personas).forEach(([k, v]) => {
     select.append(new Option(v.label, k, false, k === persona));
